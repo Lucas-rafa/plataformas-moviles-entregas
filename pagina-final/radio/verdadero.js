@@ -13,7 +13,7 @@ reproductorSelect.addEventListener("change", function () {
 // Función para cargar estaciones de radio de un país específico
 function cargarEstacionesDeRadio(country) {
     // Construye la URL de la API para obtener las estaciones de radio
-    const apiUrl = `https://de1.api.radio-browser.info/json/stations/search?country=${country}&limit=20`;
+    const apiUrl = `https://de1.api.radio-browser.info/json/stations/search?country=${country}&limit=10`;
 
     // Realiza una solicitud a la API
     fetch(apiUrl)
@@ -85,7 +85,7 @@ languageSelect.addEventListener("change", function () {
 // Función para cargar estaciones de radio de un idioma específico
 function cargarEstacionesDeRadioPorIdioma(language) {
     
-    const apiUrl = `https://de1.api.radio-browser.info/json/stations/search?language=${language}&limit=20`;
+    const apiUrl = `https://de1.api.radio-browser.info/json/stations/search?language=${language}&limit=10`;
 
     //solicitud a la API
     fetch(apiUrl)
