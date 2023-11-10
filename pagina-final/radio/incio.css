@@ -1,0 +1,236 @@
+html{
+    /* overflow-y: hidden;  */
+    overflow-x: hidden;   
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.layout {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 3 1fr;
+    grid-template-columns: 3 1fr;
+    grid-template-areas:
+    "header header header"
+    "main main main "
+    "footer footer footer";
+
+}
+
+.header {
+    grid-area: header;
+    background-color: white;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 120px; /* Ajusta el tamaño del logotipo según tus necesidades */
+    height: auto;
+    margin-right: 20px; /* Agrega espacio entre la imagen y los elementos de navegación */
+    /* object-fit: cover; */
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: black;
+}
+.nav-link:hover {
+    background-color: #444;
+    position: relative;
+    top: -5px; /* Puedes ajustar el valor según tu preferencia */
+}
+
+
+
+
+.nav-toggle {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px; /* Ajusta la posición vertical según tus necesidades */
+    right: 20px; /* Ajusta la posición horizontal según tus necesidades */
+}
+
+.bar {
+    width: 30px;
+    height: 3px;
+    background-color: black;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+/* Add mobile responsiveness */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: black;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 1;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 10px;
+    }
+}
+
+.main {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: main;
+    background-color: black;
+    padding: 20px;
+    color: white;
+}
+
+.galeria {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.item {
+    height: 300px;
+    width: 300px;
+    margin: 5px;
+    border: solid 3px #ffffff;
+    box-shadow: 4px 4px 10px rgba(247, 247, 247, 0.2);
+    transition: all 0.3s ease-in-out;
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .item {
+        height: auto;
+        width: calc(50% - 10px);
+        margin: 5px;
+    }
+}
+h5{
+    font-size: 70%; /* Ajusta el tamaño del h5 en relación con el contenedor (.item) */
+    position: absolute;
+    bottom: 10px; /* Ajusta la posición según tus necesidades */
+    width: 100%;
+    text-align: center;
+    margin: 0;
+
+}
+h6{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 10px;
+    transition: all 0.3s ease-in-out;
+    
+}
+
+h6:hover {
+    color: #d000ff; /* Cambia este valor de color al que prefieras */
+    transition: color 0.3s ease; /* Agrega una transición para un cambio suave */
+}
+
+.item img{
+
+    max-width: 100%;
+    object-fit: cover;
+    height: auto;
+}
+
+.item:hover{
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.item:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+img{
+    height: auto;
+
+}
+
+.footer {
+    height: 30px; /* Mantiene la altura */
+    grid-area: footer;
+    background-color: #333;
+    color: #fff;
+    padding: 20px; /* Reduce el relleno superior e inferior */
+    text-align: center; /* Centra el contenido del footer */
+    margin-top: auto; /* Añade margen superior automático para llenar el espacio */
+}
+
+.redes {
+    height: auto; /* Elimina la altura fija y permite que se ajuste automáticamente */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Reduce el espacio entre elementos */
+}
+
+.item2 {
+    width: 50px;
+    height: 10px; /* Reduce la altura de los elementos .item2 */
+}
+
+.item2 img {
+    width: 30px;
+    height: 30px;
+}
+@media (min-width: 769px) {
+    .layout {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+        "header header header"
+        "main main main "
+        "footer footer footer";
+    }
+
+    .header, .main, .aside{
+        padding: 10px;
+    }
+}

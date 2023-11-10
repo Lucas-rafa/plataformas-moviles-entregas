@@ -1,0 +1,275 @@
+/* cuerpo------------------------------------------------------------------------------------ */
+html{
+    overflow-y: hidden;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.layout {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 3 1fr;
+    grid-template-columns: 3 1fr ;
+    grid-template-areas:
+    "header header header"
+    "aside main main"
+    "footer footer footer";
+}
+
+.header {
+    grid-area: header;
+    background-color: white;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-width: 120px; /* Ajusta el tamaño del logotipo según tus necesidades */
+    height: auto;
+    margin-right: 20px; /* Agrega espacio entre la imagen y los elementos de navegación */
+    /* object-fit: cover; */
+}
+.main {
+    height: 68vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-area: main;
+    background-color: black;
+    padding: 20px;
+    color: white;
+}
+
+.radio {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.footer {
+    height: 30px; /* Mantiene la altura */
+    grid-area: footer;
+    background-color: #333;
+    color: #fff;
+    padding: 10px; /* Reduce el relleno superior e inferior */
+    text-align: center; /* Centra el contenido del footer */
+    margin-top: auto; /* Añade margen superior automático para llenar el espacio */
+}
+/* ---------------------------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+/* Navbar style-------------------------------------------------------------------------------------- */
+.navbar {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration:solid;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: black;
+}
+.nav-link:hover {
+    background-color: #0d0d0d;
+    position: relative;
+    top: 10px; /* Puedes ajustar el valor según tu preferencia */
+}
+
+
+
+
+.nav-toggle {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px; /* Ajusta la posición vertical*/
+    right: 20px; /* Ajusta la posición horizontal */
+}
+
+.bar {
+    width: 30px;
+    height: 3px;
+    background-color: black;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+/* Add mobile responsiveness */
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: black;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 1;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 10px;
+    }
+}
+/* ---------------------------------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+/*aside style----------------------------------------------------------------------------------- */
+.aside {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 30px;
+    grid-area: aside;
+    background-color: #666;
+    color: #fff;
+    /* padding: 20px; */
+}
+
+.aside select {
+    /* width: 100%; */
+    /* padding: 5px; */
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    background-color: #666;
+    color: #fff;
+}
+
+
+.aside .accordion {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente los elementos del acordeón */
+    margin-bottom: 15px;
+}
+
+.accordion label {
+    cursor: pointer;
+    width: 100%; /* Hace que las etiquetas ocupen todo el ancho del contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px; /* Ajusta el relleno según tus preferencias */
+}
+
+.accordion-panel {
+    max-height: 10;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    width: 100%; /* Hace que el contenido ocupe todo el ancho del contenedor */
+}
+
+.accordion-panel.active {
+    max-height: 200px; /* o un valor suficientemente grande */
+}
+
+/* -------------------------------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* footer style-------------------------------------------------------------------------- */
+.redes {
+    height: auto; /* Elimina la altura fija y permite que se ajuste automáticamente */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px; /* Reduce el espacio entre elementos */
+}
+
+.item2 {
+    width: 50px;
+    height: 5px; /* Reduce la altura de los elementos .item2 */
+}
+
+.item2 img {
+    width: 30px;
+    height: 30px;
+}
+
+
+
+@media (min-width: 769px) {
+    .layout {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+        "header header header"
+        "aside main main "
+        "footer footer footer";
+    }
+
+    .header, .main, .aside, .footer {
+        padding: 10px;
+    }
+}
+
+
+
+
+
+/* Estilo para los select */
+select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+}
