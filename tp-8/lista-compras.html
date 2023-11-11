@@ -1,122 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lista de Contactos</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lista de Compras</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
 
     <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
-        <h1>Lista de Contactos</h1>
-        <p class="lead">El objetivo es construir una lista de contactos, ordenada alfabéticamente.</p>
-        <p>Sugerencia: usar la función <code>mostrarListado()</code> para dibujar en la pantalla el listado de contactos.</p>
+        <h1>Lista de Compras</h1>
+        <p class="lead">El objetivo es construir una lista de compras donde se puedan agregar productos.</p>
         <h2 class="h3">Objetivos Adicionales</h2>
         <ol>
-            <li>Agregar opción de ordenar por nombre o por apellido el listado de contactos.</li>
-            <li>Agregar un nuevo campo teléfono al formulario y a la lista de contactos.</li>
-            <li>Agregar la opción de marcar como favorito un contacto. Luego, agregar opción para ver sólo los contactos favoritos.</li>
+            <li>Agregar funcionalidad para limpiar la lista, eliminando todos los productos.</li>
+            <li>Agregar opción para eliminar cada elemento de forma individual.</li>
+            <li>Ordenar alfabéticamente la lista de productos.</li>
         </ol>
 
         <div class="card">
             <div class="card-body">
-                <h2>Contactos</h2>
-
-                <div>
-                    <label for="ordenar-por">Ordenar por:</label>
-                    <select id="ordenar-por">
-                        <option value="nombre">Nombre</option>
-                        <option value="apellido">Apellido</option>
-                    </select>
-                </div>
-
-                <ul id="lista-contactos"></ul>
+                <h2>Listado de Productos</h2>
+                <ul id="lista-productos">
+                    <li id="0">Pan <button class="btn btn-outline-dark btn-sm" onclick="eliminarProducto(0)">X</button></li>
+                </ul>
 
                 <hr class="hr">
 
-                <h2>Nuevo Contacto</h2>
-                <form id="form-contacto">
+                <h2>Agregar Producto</h2>
+                <form id="form-producto">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="nombre" id="input-nombre" placeholder="Nombre" aria-label="Nombre">
-                        <input type="text" class="form-control" name="apellido" id="input-apellido" placeholder="Apellido" aria-label="Apellido">
-                        <input type="text" class="form-control" name="telefono" id="input-telefono" placeholder="Teléfono" aria-label="Teléfono">
+                        <input type="text" class="form-control" aria-label="Nombre del Producto">
+                        <button class="btn btn-primary" type="submit">Agregar Producto</button>
                     </div>
-                    <button class="btn btn-primary" type="submit">Agregar Contacto</button>
                 </form>
+
+                <div class="row">
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-limpiar" class="btn d-block w-100 btn-primary">
+                            Limpiar lista
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-4 my-1">
+                        <button id="btn-ordenar" class="btn d-block w-100 btn-primary">
+                            Ordenar alfabéticamente
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        let contactos = [
-            {
-                nombre: 'Juan',
-                apellido: 'Pérez',
-                telefono: '123-456-7890',
-                favorito: false
-            },
-        ];
-
-        function agregarContacto(nombre, apellido, telefono) {
-            contactos.push({
-                nombre: nombre,
-                apellido: apellido,
-                telefono: telefono,
-                favorito: false
-            });
-            mostrarListado();
+        /**
+         * agregarProducto()
+         * esta función se va a llamar cuando el usuario envía el formulario con el nombre del producto para agregar.
+         */
+        i = 1;
+        function agregarProducto(nombreProducto, i) {
+            var lista = document.getElementById("lista-productos");
+            lista.innerHTML += `
+                <li id="${i}">
+                    ${nombreProducto}
+                    <button class="btn btn-outline-dark btn-sm" onclick="eliminarProducto(${i})">X</button>
+                </li>`;
         }
 
-        function mostrarListado() {
-            const listaContactos = document.getElementById('lista-contactos');
-            const ordenarPor = document.getElementById('ordenar-por').value;
+        function limpiarLista(e){
+            var lista = document.getElementById("lista-productos");
+            lista.innerHTML = "";
+        }
 
-            listaContactos.innerHTML = '';
+        function eliminarProducto(id) {
+            var lista = document.getElementById("lista-productos");
+            var elemento = document.getElementById(id);
+            lista.removeChild(elemento);
+        }
 
-            // Ordenar los contactos según la opción seleccionada
-            contactos.sort((a, b) => {
-                if (ordenarPor === 'nombre') {
-                    return a.nombre.localeCompare(b.nombre);
-                } else if (ordenarPor === 'apellido') {
-                    return a.apellido.localeCompare(b.apellido);
-                }
+        function ordenarAlfabeticamente(e) {
+            var lista = document.getElementById("lista-productos");
+            var elementos = Array.from(lista.getElementsByTagName("li"));
+
+            elementos.sort(function(a, b) {
+                var palabra1 = a.textContent.trim().toUpperCase();
+                var palabra2 = b.textContent.trim().toUpperCase();
+                if (palabra1 < palabra2) return -1;
+                if (palabra1 > palabra2) return 1;
+                return 0;
             });
 
-            contactos.forEach(contacto => {
-                const item = document.createElement('li');
-                item.textContent = `${contacto.nombre} ${contacto.apellido} - Teléfono: ${contacto.telefono}`;
+            lista.innerHTML = "";
 
-                if (contacto.favorito) {
-                    item.innerHTML += ' <span class="badge bg-warning">Favorito</span>';
-                }
-
-                listaContactos.appendChild(item);
+            elementos.forEach(function(elemento) {
+                lista.appendChild(elemento);
             });
         }
 
         function handlerFormulario(e) {
             e.preventDefault();
-            const inputNombre = document.getElementById('input-nombre');
-            const inputApellido = document.getElementById('input-apellido');
-            const inputTelefono = document.getElementById('input-telefono');
-
-            const nombre = inputNombre.value;
-            const apellido = inputApellido.value;
-            const telefono = inputTelefono.value;
-
-            inputNombre.value = '';
-            inputApellido.value = '';
-            inputTelefono.value = '';
-
-            agregarContacto(nombre, apellido, telefono);
+            const input = e.target.querySelector('input');
+            const nombreProducto = input.value;
+            input.value = "";
+            agregarProducto(nombreProducto, i);
+            i++;
         }
 
-        document.getElementById('form-contacto').addEventListener('submit', handlerFormulario);
-
-        // Llama a mostrarListado() al cargar la página para mostrar los contactos iniciales
-        mostrarListado();
+        document.querySelector('form').addEventListener('submit', handlerFormulario);
+        document.querySelector('#btn-limpiar').addEventListener('click', limpiarLista);
+        document.querySelector('#btn-ordenar').addEventListener('click', ordenarAlfabeticamente);
     </script>
 </body>
 </html>
