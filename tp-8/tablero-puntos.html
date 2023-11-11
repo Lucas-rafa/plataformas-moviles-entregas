@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tablero de Puntos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+        <h1>Tablero de Puntos</h1>
+        <p class="lead">El objetivo es construir un tablero para mostrar el puntaje de un partido entre 2 equipos.</p>
+        <h2 class="h3">Objetivos Adicionales</h2>
+        <ol>
+            <li>En lugar de tener un único boton para incrementar los puntos del equipo, se desea tener un botón para <strong>incrementar (+)</strong> y otro para <strong>decrementar (-)</strong> los puntos de cada equipo.</li>
+            <li>Agregar la acción de <strong>invertir puntaje</strong>, para intercambiar los puntos entre el equipo local y el equipo visitante.</li>
+            <li>Agregar la acción de <strong>finalizar partido</strong>, que deshabilita los botones de puntaje, para que ya no se puedan sumar puntos. Los botones se tendrían que volver a habilitar cuando se reinicia el tablero.</li>
+        </ol>
+
+    	<!-- Tablero de Puntaje -->
+        <div class="card">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-5">
+                        <span class="display-1" id="local">0</span>
+                        <p class="m-0" >Local</p>
+                    </div>
+                    <div class="col-2">
+                        <span class="display-1">:</span>
+                    </div>
+                    <div class="col-5">
+                        <span class="display-1" id="visitante">0</span>
+                        <p class="m-0">Visitante</p>
+                    </div>
+                </div>
+
+                <hr class="hr">
+
+		        <h2>Actualizar Contador</h2>
+		        <div class="row">
+		            <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-primary" data-funcion="punto-local">
+                            Punto Local
+                        </button>
+                    </div>                    
+		            <div class="col-12 col-sm-4 my-1">
+		                <button class="btn d-block w-100 btn-primary" data-funcion="punto-visitante">
+		                    Punto Visitante
+		                </button>
+		            </div>
+		            <div class="col-12 col-sm-4 my-1">
+		                <button class="btn d-block w-100 btn-danger" data-funcion="reiniciar">
+		                    Reinicio
+		                </button>
+		            </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-primary" data-funcion="punto-local-decrementar">
+                        Punto Local (decrementar-)
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button class="btn d-block w-100 btn-primary" data-funcion="punto-visitante-decrementar">
+                        Punto Visitante (decrementar-)
+                        </button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+		                <button class="btn d-block w-100 btn-danger" data-funcion="finalizar">
+		                    Finalizar Partido
+		                </button>
+		            </div>
+                    <div class="col-12 col-sm-4 my-1">
+		                <button class="btn d-block w-100 btn-primary" data-funcion="invertir">
+		                    Invertir Puntaje
+		                </button>
+		            </div>
+		        </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script>
+        var puntaje1 = 0, puntaje2 = 0, reinicio = 0;
+        function funcionAumentarLocal(){
+            puntaje1++;
+            let local = document.getElementById('local');
+            local.innerHTML = puntaje1;
+        }
+        function funcionAumentarVisitante(){
+            puntaje2++;
+            let visitante = document.getElementById('visitante');
+            visitante.innerHTML = puntaje2;
+        }
+        function funcionDecrementarLocal(){
+            puntaje1--
+            let local = document.getElementById('local');
+            local.innerHTML = puntaje1;
+        }
+        function funcionDecrementarVisitante(){
+            puntaje2--;
+            let visitante = document.getElementById('visitante');
+            visitante.innerHTML = puntaje2;
+        }
+        function funcionInvertirPuntaje(){
+            let local = document.getElementById('local');
+            let visitante = document.getElementById('visitante');   
+            let puntaje3 
+            puntaje3 = puntaje1
+            puntaje1 = puntaje2
+            puntaje2 = puntaje3
+            local.innerHTML = puntaje1
+            visitante.innerHTML = puntaje2
+        }
+
+        function funcionReiniciar(){
+            let local = document.getElementById('local');
+            let visitante = document.getElementById('visitante');
+            local.innerHTML = 0;
+            puntaje1 = 0;
+            visitante.innerHTML = 0;
+            puntaje2 = 0;
+        }
+
+        function reiniciarContador(e){
+            puntaje1 = 0;
+            puntaje2 = 0;
+            let numIzq = document.getElementById("local")
+            numIzq.innerHTML = `<span id="local" class="display-1">0</span>`
+            let numDer = document.getElementById("visitante")
+            numDer.innerHTML = `<span id="visitante" class="display-1">0</span>`
+        }
+
+    function handlerBoton(e) {
+        const funcionBoton = e.target.dataset.funcion;
+        if (reinicio == 0) {  
+            switch (funcionBoton) {
+                case 'punto-local':
+                    funcionAumentarLocal();
+                    break;
+                case 'punto-visitante':
+                    funcionAumentarVisitante();
+                    break;
+                case 'punto-local-decrementar':
+                    funcionDecrementarLocal();
+                    break;
+                case 'punto-visitante-decrementar':
+                    funcionDecrementarVisitante();
+                    break;
+                case 'invertir':
+                    funcionInvertirPuntaje();
+                    break;
+                case 'reiniciar':
+                    funcionReiniciar();
+                    break;   
+                case 'finalizar':
+                    reinicio = 1;
+                    break;
+        }
+    } else{
+        if(funcionBoton == 'reiniciar'){
+                    reiniciarContador();
+                    reinicio = 0;
+       }
+    }
+}    
+        document.querySelectorAll('button.btn').forEach(e => e.addEventListener('click', handlerBoton));
+    </script>
+</body>
+</html>
