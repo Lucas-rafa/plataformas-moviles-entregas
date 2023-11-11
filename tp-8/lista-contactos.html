@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Lista de Contactos</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lista de Contactos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
@@ -23,8 +23,16 @@
             <div class="card-body">
                 <h2>Contactos</h2>
 
+                <div>
+                    <label for="ordenar-por">Ordenar por:</label>
+                    <select id="ordenar-por">
+                        <option value="nombre">Nombre</option>
+                        <option value="apellido">Apellido</option>
+                    </select>
+                </div>
+
                 <ul id="lista-contactos"></ul>
-                    
+
                 <hr class="hr">
 
                 <h2>Nuevo Contacto</h2>
@@ -32,11 +40,9 @@
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="nombre" id="input-nombre" placeholder="Nombre" aria-label="Nombre">
                         <input type="text" class="form-control" name="apellido" id="input-apellido" placeholder="Apellido" aria-label="Apellido">
-                        <input type="text" class="form-control" name="telefono" id="input-telefono" placeholder="telefono" aria-label="Telefono">
+                        <input type="text" class="form-control" name="telefono" id="input-telefono" placeholder="Teléfono" aria-label="Teléfono">
                     </div>
                     <button class="btn btn-primary" type="submit">Agregar Contacto</button>
-                    <button class="btn btn-primary" id="mostrar" onclick="mostrarListado()">Mostrar Contactos</button>
-
                 </form>
             </div>
         </div>
@@ -46,51 +52,71 @@
     <script type="text/javascript">
         let contactos = [
             {
-                nombre: 'juan',
-                apellido: 'perez',
+                nombre: 'Juan',
+                apellido: 'Pérez',
+                telefono: '123-456-7890',
+                favorito: false
             },
         ];
 
-        /**
-         * agregarContacto()
-         * esta función se va a llamar cuando el usuario envía el formulario con el nuevo contacto para agregar.
-         */
         function agregarContacto(nombre, apellido, telefono) {
-            let datosCompletos = document.getElementById("lista-contactos");
-            // let datos = document.createElement('li');
-            // datos.innerText = nombre + ' ' + apellido + ' ' + telefono;
-            // datosCompletos.append(datos);
-            contactos.append(datosCompletos);
+            contactos.push({
+                nombre: nombre,
+                apellido: apellido,
+                telefono: telefono,
+                favorito: false
+            });
+            mostrarListado();
         }
 
-        /**
-         * mostrarListado()
-         * esta función se encarga de mostrar en el DOM la lista de todos los contactos guardados en la variable global contactos.
-         */
         function mostrarListado() {
-            let mostrar = querySelectorAll("lista-contactos");
-            
+            const listaContactos = document.getElementById('lista-contactos');
+            const ordenarPor = document.getElementById('ordenar-por').value;
+
+            listaContactos.innerHTML = '';
+
+            // Ordenar los contactos según la opción seleccionada
+            contactos.sort((a, b) => {
+                if (ordenarPor === 'nombre') {
+                    return a.nombre.localeCompare(b.nombre);
+                } else if (ordenarPor === 'apellido') {
+                    return a.apellido.localeCompare(b.apellido);
+                }
+            });
+
+            contactos.forEach(contacto => {
+                const item = document.createElement('li');
+                item.textContent = `${contacto.nombre} ${contacto.apellido} - Teléfono: ${contacto.telefono}`;
+
+                if (contacto.favorito) {
+                    item.innerHTML += ' <span class="badge bg-warning">Favorito</span>';
+                }
+
+                listaContactos.appendChild(item);
+            });
         }
 
         function handlerFormulario(e) {
             e.preventDefault();
-            const inputNombre = e.target.querySelector('#input-nombre');
-            const inputApellido = e.target.querySelector('#input-apellido');
-            const inputTelefono = e.target.querySelector('#input-telefono');
+            const inputNombre = document.getElementById('input-nombre');
+            const inputApellido = document.getElementById('input-apellido');
+            const inputTelefono = document.getElementById('input-telefono');
 
             const nombre = inputNombre.value;
             const apellido = inputApellido.value;
             const telefono = inputTelefono.value;
 
-            inputNombre.value = "";
-            inputApellido.value = "";
-            inputTelefono.value = "";
+            inputNombre.value = '';
+            inputApellido.value = '';
+            inputTelefono.value = '';
 
             agregarContacto(nombre, apellido, telefono);
         }
 
-        document.querySelector('form').addEventListener('submit', handlerFormulario);
-        // document.querySelector('form').addEventListener('mostrar', handlerFormulario);
+        document.getElementById('form-contacto').addEventListener('submit', handlerFormulario);
+
+        // Llama a mostrarListado() al cargar la página para mostrar los contactos iniciales
+        mostrarListado();
     </script>
 </body>
 </html>
